@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 GetRequest requestor = new GetRequest();
+
                 requestor.execute("index.php?var1=ban2");
                 handler.postDelayed(this, delay);
             }
