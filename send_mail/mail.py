@@ -1,17 +1,19 @@
 import config
 import csv
+import sys
 import smtplib
+import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
-def generate_mail(recipient_mail, picture, timestamp, objects):
+def generate_mail(recipient_mail, timestamp, objects):
     msgRoot = MIMEMultipart()
     msgRoot['Subject'] = config.mail_subj
     msgRoot['From'] = config.username
     msgRoot['To'] = recipient_mail
 
-    img_data = open(picture, 'rb').read()
+    # img_data = open(picture, 'rb').read()
 
     html_noimage_text = '''
     <!DOCTYPE html>
@@ -22,7 +24,7 @@ def generate_mail(recipient_mail, picture, timestamp, objects):
             <h1>We were watching...</h1>
         </font>
     </div>
-        
+
     <br>
 
     <div style="display: flex; justify-content: center;">
@@ -51,13 +53,13 @@ def generate_mail(recipient_mail, picture, timestamp, objects):
     '''
 
     msgRoot.attach(MIMEText(html_noimage_text, 'html'))
-    msgRoot.attach(MIMEImage(img_data, name="frame-" + timestamp[0] + "-" + timestamp[1]))
+    # msgRoot.attach(MIMEImage(img_data, name="frame-" + timestamp[0] + "-" + timestamp[1]))
 
-    
+
 
     return msgRoot.as_string()
 
-def smtp_main(picture, timestamp, objects):
+def smtp_main(timestamp, objects):
     smtp = smtplib.SMTP(config.mail_host, config.mail_port)
     smtp.starttls()
     print("Attempting to login...")
@@ -69,26 +71,18 @@ def smtp_main(picture, timestamp, objects):
 
         for recipient in recipients:
             try:
-                mmail = generate_mail(recipient[config.email_index], picture, timestamp, objects)
+                mmail = generate_mail(recipient[config.email_index], timestamp, objects)
 
                 smtp.sendmail(config.username, recipient[config.email_index], mmail)
                 print('Mail sent to... ' + recipient[config.email_index])
             except Exception as e:
                 print("Cannot send mail to " + recipient[config.email_index] + "\n" + str(e))
-            
+
     smtp.quit()
 
 if __name__=='__main__':
-    picture = ""
-    timestamp = ""
-    objects = ""
+    objects = sys.argv[1]
 
-    n = int(input())
-    timestamp = input().split(' ')
-    picture = input()
-    for i in range(n):
-        objects += input() + ","
+    objects = objects.replace(",", "<br>")
 
-    objects = objects[:-1].replace(",", "<br>")
-    
-    smtp_main(picture, timestamp, objects)
+    smtp_main([datetime.datetime.now().strftime("%A, %d %B, %Y"), datetime.datetime.now().strftime("%I:%M%p")], objects)
