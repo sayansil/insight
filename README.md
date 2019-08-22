@@ -4,7 +4,7 @@
 
 Project Insight aims to completely automate the problem of surveillance. It requires a CCTV camera connected to a computer with a mid-ranged GPU and an active internet connection. The live feed obtained from the CCTV camera is received by the computer which performs real-time object detection using the YOLO algorithm. The objects detected are documented as a list with their respective timestamps and sent to the users at certain time intervals through an Android app. The users can be anywhere in the world and can view the documentation which is refreshed at intervals set by him. If any harmful (or blacklisted) object is detected, an emal with the snapshot is automatically sent to the user. In the next version, we are also working on a way to store all the items in a centralized database so that the user can view the history of the items detected in a particular timespan.
 
-![](https://i.ibb.co/nkMCvp6/Deepin-Screenshot-select-area-20190302232239.png "Demonstration")
+<iframe src="https://player.vimeo.com/video/344358614" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
 ## TECHNICAL FOUNDATION
 
