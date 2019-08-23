@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2b4060">
+    android:background="#e0f8ff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:textColor="#fff"
             android:textStyle="bold"
             android:textAlignment="center"
-            android:text="Detected items"
+            android:text="History"
             android:textSize="24sp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
@@ -28,38 +28,17 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"/>
 
-        <ImageButton
-            android:id="@+id/logout"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_logout"
-            android:scaleType="fitCenter"
-            android:padding="16dp"
-            android:background="@drawable/rounded_bg2"/>
-
     </LinearLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/items_found"
+        android:id="@+id/items_history"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>
 
-    <Button
-        android:id="@+id/history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_bg3"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:text="History"/>
 
 </LinearLayout>
