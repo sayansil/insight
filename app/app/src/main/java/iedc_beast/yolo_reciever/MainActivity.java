@@ -3,13 +3,12 @@ package iedc_beast.yolo_reciever;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 HttpURLConnection conn = (HttpURLConnection) _url.openConnection();
                 conn.setRequestMethod("GET");
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-
 
                 tmp=in.readLine();
 
