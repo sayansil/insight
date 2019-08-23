@@ -1,11 +1,18 @@
 package iedc_beast.yolo_reciever;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter mAdapter;
     private String[] xItems = {"Gun", "Knife", "Girl"};
     private String url = "insight-iedc.eu-gb.cf.appdomain.cloud";
+    final int delay = 2000; //milliseconds
+
+    private FirebaseAuth mAuth;
 
     class GetRequest extends AsyncTask<String, Void, String> {
         @Override
@@ -34,10 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 conn.setRequestMethod("GET");
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-                //while((tmp=in.readLine()) != null) {
-                //Log.d("Found ", tmp);
-                //allitems.add(tmp);
-                //}
+
 
                 tmp=in.readLine();
 
@@ -84,11 +91,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.iedcmembers);
+        listView = findViewById(R.id.items_found);
+        ImageButton logoutBtn = findViewById(R.id.logout);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            goBackToLogin();
+        }
 
         final Handler handler = new Handler();
-        final int delay = 2000; //milliseconds
 
         handler.postDelayed(new Runnable(){
             public void run(){
@@ -99,5 +112,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }, delay);
 
+        logoutBtn.setOnClickListener((View v) -> {
+            handler.removeCallbacksAndMessages(null);
+            mAuth.signOut();
+            goBackToLogin();
+        });
     }
+
+    private void goBackToLogin() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
